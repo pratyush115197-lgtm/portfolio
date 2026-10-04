@@ -1,0 +1,217 @@
+/* ==========================================================
+   Portfolio stylesheet: Pratyush Khakda
+   Structure: 1 tokens, 2 base, 3 layout, 4 components,
+              5 media queries, 6 accessibility
+   ========================================================== */
+
+/* 1. DESIGN TOKENS: one place to change the palette and type */
+:root {
+    --color-bg: #f3f6f7;        /* page background, cool grey */
+    --color-surface: #ffffff;   /* sidebar panel */
+    --color-ink: #10282e;       /* main text, deep teal-black */
+    --color-muted: #4d6469;     /* secondary text */
+    --color-accent: #0b6e6a;    /* links, buttons, heading rule */
+    --color-accent-dark: #084f4c;
+    --color-highlight: #f2b134; /* keyboard focus ring */
+    --color-line: #d3dde0;      /* borders */
+
+    --font-heading: "Bricolage Grotesque", "Segoe UI", Arial, sans-serif;
+    --font-body: "Source Serif 4", Georgia, "Times New Roman", serif;
+
+    --space-s: 0.75rem;
+    --space-m: 1.5rem;
+    --space-l: 3rem;
+    --radius: 6px;
+}
+
+/* 2. BASE: reset and element defaults */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+    margin: 0;
+    background: var(--color-bg);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    font-size: 1.125rem;
+    line-height: 1.65;
+}
+
+h1, h2, h3 {
+    font-family: var(--font-heading);
+    line-height: 1.15;
+    margin: 0 0 var(--space-s);
+}
+
+h1 { font-size: 1.9rem; font-weight: 800; }
+h2 { font-size: 1.6rem; font-weight: 800; }
+h3 { font-size: 1.2rem; font-weight: 600; }
+
+p { margin: 0 0 var(--space-s); max-width: 65ch; } /* keeps lines readable */
+
+a { color: var(--color-accent); text-underline-offset: 3px; }
+a:hover { color: var(--color-accent-dark); }
+
+ul { margin: 0; padding: 0; list-style: none; }
+
+/* 3. LAYOUT: CSS Grid for the page, Flexbox inside components */
+.page {
+    display: grid;
+    grid-template-columns: 300px 1fr; /* sidebar + content */
+    gap: var(--space-l);
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: var(--space-l) var(--space-m);
+}
+
+.sidebar {
+    align-self: start;
+    position: sticky;   /* stays visible while scrolling on desktop */
+    top: var(--space-m);
+    background: var(--color-surface);
+    border: 1px solid var(--color-line);
+    border-top: 6px solid var(--color-accent);
+    border-radius: var(--radius);
+    padding: var(--space-m);
+}
+
+.content section {
+    padding-bottom: var(--space-l);
+    scroll-margin-top: var(--space-m);
+}
+
+/* 4. COMPONENTS */
+.avatar {
+    display: block;
+    width: 96px;
+    height: 96px;
+    margin-bottom: var(--space-s);
+    border-radius: 50%;
+    object-fit: cover;  /* crops the photo to fill the circle without stretching */
+}
+
+.tagline { color: var(--color-muted); font-size: 1rem; }
+
+.nav-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    margin-top: var(--space-m);
+}
+
+.nav-list a {
+    display: block;
+    padding: 0.4rem 0.6rem;
+    border-radius: var(--radius);
+    font-family: var(--font-heading);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.nav-list a:hover { background: var(--color-bg); }
+
+/* Rule under each section heading marks where a section begins */
+.content h2 {
+    padding-bottom: 0.4rem;
+    border-bottom: 3px solid var(--color-accent);
+    max-width: 14ch;
+    margin-bottom: var(--space-m);
+}
+
+/* Projects are a divided list: the rules separate items, no cards needed */
+.project {
+    padding: var(--space-m) 0;
+    border-top: 1px solid var(--color-line);
+}
+.project:last-child { border-bottom: 1px solid var(--color-line); }
+
+.meta {
+    font-family: var(--font-heading);
+    font-size: 0.95rem;
+    color: var(--color-muted);
+}
+
+.skill-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-s);
+}
+
+.skill-list li {
+    padding: 0.35rem 0.9rem;
+    border: 2px solid var(--color-accent);
+    border-radius: 999px;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.button {
+    display: inline-block;
+    padding: 0.7rem 1.4rem;
+    background: var(--color-accent);
+    color: #ffffff;
+    border-radius: var(--radius);
+    font-family: var(--font-heading);
+    font-weight: 600;
+    text-decoration: none;
+}
+.button:hover { background: var(--color-accent-dark); color: #ffffff; }
+
+.site-footer {
+    padding: var(--space-m);
+    border-top: 1px solid var(--color-line);
+    text-align: center;
+    color: var(--color-muted);
+    font-size: 0.95rem;
+}
+.site-footer p { margin: 0 auto; }
+
+/* 5. MEDIA QUERIES: mobile-friendly layout */
+
+/* Tablets and below: stack the sidebar above the content */
+@media (max-width: 800px) {
+    .page {
+        grid-template-columns: 1fr;
+        gap: var(--space-m);
+        padding: var(--space-m) 1rem;
+    }
+    .sidebar { position: static; } /* sticky only makes sense side by side */
+    .nav-list {
+        flex-direction: row;       /* nav becomes a horizontal row */
+        flex-wrap: wrap;
+    }
+}
+
+/* Small phones: slightly smaller type */
+@media (max-width: 480px) {
+    body { font-size: 1.0625rem; }
+    h1 { font-size: 1.6rem; }
+    h2 { font-size: 1.4rem; }
+}
+
+/* 6. ACCESSIBILITY */
+
+/* Visible keyboard focus on every interactive element */
+a:focus-visible {
+    outline: 3px solid var(--color-highlight);
+    outline-offset: 3px;
+}
+
+/* Skip link: hidden until focused by keyboard */
+.skip-link {
+    position: absolute;
+    left: 1rem;
+    top: -4rem;
+    padding: 0.5rem 1rem;
+    background: var(--color-ink);
+    color: #ffffff;
+    z-index: 10;
+}
+.skip-link:focus { top: 1rem; }
+
+/* Respect users who turn off animation */
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+}
